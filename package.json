@@ -1,0 +1,21 @@
+{
+  "name": "js-rtlsdr",
+  "version": "0.0.1",
+  "description": "Low-level wrapper around librtlsdr",
+  "main": "index.js",
+  "scripts": {
+    "configure": "node-gyp configure",
+    "build": "node-gyp build",
+    "test": "mocha"
+  },
+  "author": "Ben Chociej <ben@chociej.io>",
+  "license": "GPL-2.0+",
+  "devDependencies": {
+    "mocha": "^3.0.2",
+    "nan": "^2.4.0",
+    "node-gyp": "^3.4.0"
+  },
+  "dependencies": {
+    "bindings": "^1.2.1"
+  }
+}
