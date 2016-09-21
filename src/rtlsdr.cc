@@ -3,7 +3,7 @@
 #include <node_buffer.h>
 
 #include "rtlsdr.h"
-#include "js_rtlsdr.h"
+#include "utils.h"
 
 using v8::Local;
 using v8::Object;
