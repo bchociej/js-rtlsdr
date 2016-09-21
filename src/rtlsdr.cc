@@ -595,7 +595,7 @@ NAN_METHOD(read_sync) {
 
 // DEPRECATED IN LIBRTLSDR
 // wait_async(dev_hnd:DeviceHandle, listener:function(event, args...))
-// listener events: 'data' -> Buffer, 'error', -> msg:string, 'done'
+// listener events: <'data', Buffer> , <'error', msg:string> , <'done'>
 NAN_METHOD(wait_async) {
 	Local<Value> dev_hnd  = info[0],
 	             listener = info[1];
@@ -615,7 +615,7 @@ NAN_METHOD(wait_async) {
 }
 
 // read_async(dev_hnd:DeviceHandle, listener:function(event, args...), buf_num:int = 0, buf_len:int = 0)
-// listener events: 'data' -> Buffer, 'error', -> msg:string, 'done'
+// listener events & args: <'data', Buffer> , <'error', msg:string> , <'done'>
 NAN_METHOD(read_async) {
 	Local<Value> dev_hnd  = info[0],
 	             listener = info[1],
