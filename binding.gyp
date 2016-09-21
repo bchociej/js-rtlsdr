@@ -2,7 +2,7 @@
 	"targets": [
 		{
 			"target_name":  "rtlsdr",
-			"sources":      ["src/rtlsdr.cpp"],
+			"sources":      ["src/rtlsdr.cc", "src/js_rtlsdr.cc", "src/sample_reader.cc"],
 			"include_dirs": ["<!(node -e \"require('nan')\")"],
 			"libraries":    ["-lrtlsdr"]
 		}

@@ -1,5 +1,5 @@
-#ifndef JS_RTLSDR_GRAB_H
-#define JS_RTLSDR_GRAB_H
+#ifndef JS_RTLSDR_MAIN_API_GRAB_H
+#define JS_RTLSDR_MAIN_API_GRAB_H
 
 #include <nan.h>
 
