@@ -2,7 +2,7 @@
 #include <rtl-sdr.h>
 #include <node_buffer.h>
 
-#include "rtlsdr.h"
+#include "rtlsdr_wrapper.h"
 #include "utils.h"
 
 using v8::Local;

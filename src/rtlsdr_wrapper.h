@@ -4,12 +4,14 @@
 #include <nan.h>
 #include <rtl-sdr.h>
 
-#ifdef JS_RTLSDR_TEST_INCLUDE_RTL_SDR_GRAB_H
 
+#ifdef JS_RTLSDR_MODULE_IS_UNDER_TEST
+void mock_get_rtlsdr_dev_contents(const Nan::FunctionCallbackInfo<v8::Value> & info);
+void mock_set_rtlsdr_dev_contents(const Nan::FunctionCallbackInfo<v8::Value> & info);
+void mock_set_device_count(const Nan::FunctionCallbackInfo<v8::Value> & info);
 #endif
 
 // https://github.com/steve-m/librtlsdr/blob/master/include/rtl-sdr.h
-
 void get_device_count(const Nan::FunctionCallbackInfo<v8::Value> & info);
 void get_device_name(const Nan::FunctionCallbackInfo<v8::Value> & info);
 void get_device_usb_strings(const Nan::FunctionCallbackInfo<v8::Value> & info);
@@ -47,6 +49,12 @@ void read_async(const Nan::FunctionCallbackInfo<v8::Value> & info);
 void cancel_async(const Nan::FunctionCallbackInfo<v8::Value> & info);
 
 NAN_MODULE_INIT(InitAll) {
+	#ifdef JS_RTLSDR_MODULE_IS_UNDER_TEST
+	NAN_EXPORT(target, mock_get_rtlsdr_dev_contents);
+	NAN_EXPORT(target, mock_set_rtlsdr_dev_contents);
+	NAN_EXPORT(target, mock_set_device_count);
+	#endif
+
 	NAN_EXPORT(target, get_device_count);
 	NAN_EXPORT(target, get_device_name);
 	NAN_EXPORT(target, get_device_usb_strings);

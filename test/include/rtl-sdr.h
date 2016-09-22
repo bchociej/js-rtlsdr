@@ -3,6 +3,8 @@
 #ifndef JS_RTLSDR_TEST_INCLUDE_RTL_SDR_GRAB_H
 #define JS_RTLSDR_TEST_INCLUDE_RTL_SDR_GRAB_H
 
+#define JS_RTLSDR_MODULE_IS_UNDER_TEST
+
 #include <map>
 
 typedef void(*rtlsdr_read_async_cb_t)(unsigned char *buf, uint32_t len, void *ctx);
@@ -23,7 +25,7 @@ typedef struct rtlsdr_dev {
 	uint32_t center_freq = 0;
 	uint32_t tuner_bandwidth = 0;
 	uint32_t sample_rate = 0;
-	//std::map<int, int> if_gains;
+	std::map<int, int> if_gains;
 	bool buffer_ready = false;
 	bool open = false;
 	bool has_eeprom = false;
@@ -40,7 +42,6 @@ enum rtlsdr_tuner {
 };
 
 void rtlsdr_mock_set_device_count(uint32_t count);
-void rtlsdr_mock_set_has_eeprom(rtlsdr_dev_t * dev, bool has_eeprom);
 
 uint32_t rtlsdr_get_device_count(void);
 const char* rtlsdr_get_device_name(uint32_t index);

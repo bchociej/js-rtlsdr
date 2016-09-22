@@ -8,14 +8,17 @@
   "main": "index.js",
   "scripts": {
     "install": "node-gyp configure build",
-    "test": "npm run testcpp",
-    "testcpp": "JS_RTLSDR_BUILD_CPP_TESTS=yes node-gyp configure build && ./build/Release/rtlsdr_cpp_tests"
+    "test": "npm run test_js && npm run test_addon && npm run test_cpp",
+    "test_addon": "npm run install && mocha test/addon",
+    "test_js": "mocha test/js",
+    "test_cpp": "JS_RTLSDR_BUILD_CPP_TESTS=yes npm run install && ./build/Release/rtlsdr_cpp_tests"
   },
   "dependencies": {
     "bindings": "^1.2.1",
     "nan": "^2.4.0"
   },
   "devDependencies": {
-    "@bchociej/catch": "^1.5.6-npm.4"
+    "@bchociej/catch": "^1.5.6-npm.4",
+    "mocha": "^3.0.2"
   }
 }

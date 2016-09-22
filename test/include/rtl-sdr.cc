@@ -11,11 +11,6 @@ void rtlsdr_mock_set_device_count(uint32_t count) {
 	device_count = count;
 }
 
-void rtlsdr_mock_set_eeprom_size(rtlsdr_dev_t * dev, bool has_eeprom) {
-	if(dev == NULL) return;
-	dev->has_eeprom = has_eeprom;
-}
-
 uint32_t rtlsdr_get_device_count(void) {
 	return device_count;
 }
@@ -157,7 +152,7 @@ int rtlsdr_get_tuner_gain(rtlsdr_dev_t *dev) {
 
 int rtlsdr_set_tuner_if_gain(rtlsdr_dev_t *dev, int stage, int gain) {
 	TEST_CHECK_DEV(dev);
-	//dev->if_gains[stage] = gain;
+	dev->if_gains[stage] = gain;
 	return 0;
 }
 
