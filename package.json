@@ -7,11 +7,15 @@
   "repository": "bchociej/js-rtlsdr",
   "main": "index.js",
   "scripts": {
-    "install": "node-gyp configure build"
+    "install": "node-gyp configure build",
+    "test": "npm run testcpp",
+    "testcpp": "JS_RTLSDR_BUILD_CPP_TESTS=yes node-gyp configure build && ./build/Release/rtlsdr_cpp_tests"
   },
-  "main": "index.js",
   "dependencies": {
     "bindings": "^1.2.1",
     "nan": "^2.4.0"
+  },
+  "devDependencies": {
+    "@bchociej/catch": "^1.5.6-npm.4"
   }
 }

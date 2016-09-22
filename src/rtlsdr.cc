@@ -10,12 +10,12 @@ using v8::Object;
 using v8::Value;
 
 // get_device_count() => int
-NAN_METHOD(get_device_count) {
+void get_device_count(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	JS_RTLSDR_RETURN(rtlsdr_get_device_count());
 }
 
 // get_device_name(index:int) => string
-NAN_METHOD(get_device_name) {
+void get_device_name(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> index = info[0];
 
 	if(!index->IsNumber())
@@ -26,7 +26,7 @@ NAN_METHOD(get_device_name) {
 }
 
 // get_device_usb_strings(index:int) => {vendor:string, product:string, serial:string}
-NAN_METHOD(get_device_usb_strings) {
+void get_device_usb_strings(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> index = info[0];
 
 	if(!index->IsNumber())
@@ -52,7 +52,7 @@ NAN_METHOD(get_device_usb_strings) {
 }
 
 // get_index_by_serial(serial:string) => (null|int)
-NAN_METHOD(get_index_by_serial) {
+void get_index_by_serial(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> serial = info[0];
 
 	if(!serial->IsString())
@@ -72,7 +72,7 @@ NAN_METHOD(get_index_by_serial) {
 }
 
 // open(index:int) => DeviceHandle
-NAN_METHOD(open) {
+void open(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> index = info[0];
 
 	if(!index->IsNumber())
@@ -93,7 +93,7 @@ NAN_METHOD(open) {
 }
 
 // close(dev_hnd:DeviceHandle)
-NAN_METHOD(close) {
+void close(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
@@ -111,7 +111,7 @@ NAN_METHOD(close) {
 }
 
 // set_xtal_freq(dev_hnd:DeviceHandle, rtl_freq:int, tuner_freq:int)
-NAN_METHOD(set_xtal_freq) {
+void set_xtal_freq(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd    = info[0],
 	             rtl_freq   = info[1],
 	             tuner_freq = info[2];
@@ -133,7 +133,7 @@ NAN_METHOD(set_xtal_freq) {
 }
 
 // get_xtal_freq(dev_hnd:DeviceHandle) => {rtl_freq:int, tuner_freq:int}
-NAN_METHOD(get_xtal_freq) {
+void get_xtal_freq(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
@@ -152,7 +152,7 @@ NAN_METHOD(get_xtal_freq) {
 }
 
 // get_usb_strings(dev_hnd:DeviceHandle) => {vendor:string, product:string, serial:string}
-NAN_METHOD(get_usb_strings) {
+void get_usb_strings(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
@@ -172,7 +172,7 @@ NAN_METHOD(get_usb_strings) {
 }
 
 // write_eeprom(dev_hnd:DeviceHandle, data:Buffer, offset:int, len:int)
-NAN_METHOD(write_eeprom) {
+void write_eeprom(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             data    = info[1],
 	             offset  = info[2],
@@ -216,7 +216,7 @@ NAN_METHOD(write_eeprom) {
 }
 
 // read_eeprom(dev_hnd:DeviceHandle, offset:int, len:int) => Buffer
-NAN_METHOD(read_eeprom) {
+void read_eeprom(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             offset  = info[1],
 	             len     = info[2];
@@ -256,7 +256,7 @@ NAN_METHOD(read_eeprom) {
 }
 
 // set_center_freq(dev_hnd:DeviceHandle, center_freq:int)
-NAN_METHOD(set_center_freq) {
+void set_center_freq(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd     = info[0],
 	             center_freq = info[1];
 
@@ -271,7 +271,7 @@ NAN_METHOD(set_center_freq) {
 }
 
 // get_center_freq(dev_hnd:DeviceHandle) => int
-NAN_METHOD(get_center_freq) {
+void get_center_freq(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
@@ -285,7 +285,7 @@ NAN_METHOD(get_center_freq) {
 }
 
 // set_freq_correction(dev_hnd:DeviceHandle, ppm:int)
-NAN_METHOD(set_freq_correction) {
+void set_freq_correction(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 				 ppm     = info[1];
 
@@ -300,7 +300,7 @@ NAN_METHOD(set_freq_correction) {
 }
 
 // get_freq_correction(dev_hnd:DeviceHandle) => ppm:int
-NAN_METHOD(get_freq_correction) {
+void get_freq_correction(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
@@ -310,7 +310,7 @@ NAN_METHOD(get_freq_correction) {
 }
 
 // get_tuner_type(dev_hnd:DeviceHandle) => string
-NAN_METHOD(get_tuner_type) {
+void get_tuner_type(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
@@ -335,7 +335,7 @@ NAN_METHOD(get_tuner_type) {
 }
 
 // get_tuner_gains(dev_hnd:DeviceHandle) => [int] (array of integer gains expressed in cB)
-NAN_METHOD(get_tuner_gains) {
+void get_tuner_gains(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
@@ -360,7 +360,7 @@ NAN_METHOD(get_tuner_gains) {
 }
 
 // set_tuner_gain(dev_hnd:DeviceHandle, gain:int)
-NAN_METHOD(set_tuner_gain) {
+void set_tuner_gain(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             gain    = info[1];
 
@@ -377,7 +377,7 @@ NAN_METHOD(set_tuner_gain) {
 
 // set_tuner_bandwidth(dev_hnd:DeviceHandle, bw:int)
 // 0 bw means automatic gain
-NAN_METHOD(set_tuner_bandwidth) {
+void set_tuner_bandwidth(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             bw      = info[1];
 
@@ -393,7 +393,7 @@ NAN_METHOD(set_tuner_bandwidth) {
 }
 
 // get_tuner_gain(dev_hnd:DeviceHandle) => int (expressed in cB)
-NAN_METHOD(get_tuner_gain) {
+void get_tuner_gain(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
@@ -403,7 +403,7 @@ NAN_METHOD(get_tuner_gain) {
 }
 
 // set_tuner_if_gain(dev_hnd:DeviceHandle, stage:int, gain:int)
-NAN_METHOD(set_tuner_if_gain) {
+void set_tuner_if_gain(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             stage   = info[1],
 	             gain    = info[2];
@@ -425,7 +425,7 @@ NAN_METHOD(set_tuner_if_gain) {
 }
 
 // set_tuner_gain_mode(dev_hnd:DeviceHandle, mode:int)
-NAN_METHOD(set_tuner_gain_mode) {
+void set_tuner_gain_mode(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             manual  = info[1];
 
@@ -443,7 +443,7 @@ NAN_METHOD(set_tuner_gain_mode) {
 // set_sample_rate(dev_hnd:DeviceHandle, rate:int)
 // per librtlsdr docs, valid values are 225001-300000, 900001-3200000
 // and sample loss is to be expected > 2400000
-NAN_METHOD(set_sample_rate) {
+void set_sample_rate(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd   = info[0],
 	             samp_rate = info[1];
 
@@ -459,7 +459,7 @@ NAN_METHOD(set_sample_rate) {
 }
 
 // get_sample_rate(dev_hnd:DeviceHandle) => int
-NAN_METHOD(get_sample_rate) {
+void get_sample_rate(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
@@ -473,7 +473,7 @@ NAN_METHOD(get_sample_rate) {
 }
 
 // set_testmode(dev_hnd:DeviceHandle, on:bool)
-NAN_METHOD(set_testmode) {
+void set_testmode(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             on      = info[1];
 
@@ -489,7 +489,7 @@ NAN_METHOD(set_testmode) {
 }
 
 // set_agc_mode(dev_hnd:DeviceHandle, on:bool)
-NAN_METHOD(set_agc_mode) {
+void set_agc_mode(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             on      = info[1];
 
@@ -505,7 +505,7 @@ NAN_METHOD(set_agc_mode) {
 }
 
 // set_direct_sampling(dev_hnd:DeviceHandle, mode:int)
-NAN_METHOD(set_direct_sampling) {
+void set_direct_sampling(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             mode    = info[1];
 
@@ -524,7 +524,7 @@ NAN_METHOD(set_direct_sampling) {
 }
 
 // get_direct_sampling(dev_hnd:DeviceHandle) => int
-NAN_METHOD(get_direct_sampling) {
+void get_direct_sampling(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
@@ -535,7 +535,7 @@ NAN_METHOD(get_direct_sampling) {
 }
 
 // set_offset_tuning(dev_hnd:DeviceHandle, on:bool)
-NAN_METHOD(set_offset_tuning) {
+void set_offset_tuning(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             on      = info[1];
 
@@ -551,7 +551,7 @@ NAN_METHOD(set_offset_tuning) {
 }
 
 // get_offset_tuning(dev_hnd:DeviceHandle) => bool
-NAN_METHOD(get_offset_tuning) {
+void get_offset_tuning(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
@@ -562,7 +562,7 @@ NAN_METHOD(get_offset_tuning) {
 }
 
 // reset_buffer(dev_hnd:DeviceHandle)
-NAN_METHOD(reset_buffer) {
+void reset_buffer(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0];
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
@@ -572,7 +572,7 @@ NAN_METHOD(reset_buffer) {
 }
 
 // read_sync(dev_hnd:DeviceHandle, len:int) => Buffer
-NAN_METHOD(read_sync) {
+void read_sync(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd = info[0],
 	             len     = info[1];
 
@@ -594,9 +594,9 @@ NAN_METHOD(read_sync) {
 }
 
 // DEPRECATED IN LIBRTLSDR
-// wait_async(dev_hnd:DeviceHandle, listener:function(event, args...))
-// listener events: <'data', Buffer> , <'error', msg:string> , <'done'>
-NAN_METHOD(wait_async) {
+// wait_async(dev_hnd:DeviceHandle, listener:function(event_name, args...))
+// listener event_names & args: <'data', Buffer> , <'error', msg:string> , <'done'>
+void wait_async(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd  = info[0],
 	             listener = info[1];
 
@@ -614,9 +614,9 @@ NAN_METHOD(wait_async) {
 	Nan::AsyncQueueWorker(new SampleReader(cb_listener, work));
 }
 
-// read_async(dev_hnd:DeviceHandle, listener:function(event, args...), buf_num:int = 0, buf_len:int = 0)
-// listener events & args: <'data', Buffer> , <'error', msg:string> , <'done'>
-NAN_METHOD(read_async) {
+// read_async(dev_hnd:DeviceHandle, listener:function(event_name, args...), buf_num:int = 0, buf_len:int = 0)
+// listener event_names & args: <'data', Buffer> , <'error', msg:string> , <'done'>
+void read_async(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd  = info[0],
 	             listener = info[1],
 	             buf_num  = info[2],
@@ -639,7 +639,7 @@ NAN_METHOD(read_async) {
 }
 
 // cancel_async(dev_hnd:DeviceHandle)
-NAN_METHOD(cancel_async) {
+void cancel_async(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd  = info[0];
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
