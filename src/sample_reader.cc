@@ -1,6 +1,4 @@
 #include <cstdio>
-#include <iostream>
-
 #include "sample_reader.h"
 
 using v8::Local;
