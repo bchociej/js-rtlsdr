@@ -1,6 +1,7 @@
 #ifndef JS_RTLSDR_UTILS_H
 #define JS_RTLSDR_UTILS_H
 
+#include <node.h>
 #include <nan.h>
 #include <rtl-sdr.h>
 
