@@ -33,7 +33,7 @@ void mock_get_rtlsdr_dev_contents(const Nan::FunctionCallbackInfo<Value> & info)
 	SET_DEV_FIELD(mockContent, rtl_dev, direct_sampling);
 	SET_DEV_FIELD(mockContent, rtl_dev, offset_tuning);
 	SET_DEV_FIELD(mockContent, rtl_dev, mock_sync_read_discount);
-	SET_DEV_FIELD(mockContent, rtl_dev, mock_async_num_reads);
+	SET_DEV_FIELD(mockContent, rtl_dev, mock_return_error);
 	SET_DEV_FIELD(mockContent, rtl_dev, tuner_freq);
 	SET_DEV_FIELD(mockContent, rtl_dev, rtl_freq);
 	SET_DEV_FIELD(mockContent, rtl_dev, center_freq);
@@ -104,9 +104,9 @@ void mock_set_rtlsdr_dev_contents(const Nan::FunctionCallbackInfo<Value> & info)
 	} else if(0 == field_str.compare("mock_sync_read_discount")) {
 		if(!val->IsNumber()) return Nan::ThrowTypeError("val must be a number for that field");
 		rtl_dev->mock_sync_read_discount = Nan::To<int>(val).FromJust();
-	} else if(0 == field_str.compare("mock_async_num_reads")) {
+	} else if(0 == field_str.compare("mock_return_error")) {
 		if(!val->IsNumber()) return Nan::ThrowTypeError("val must be a number for that field");
-		rtl_dev->mock_async_num_reads = Nan::To<int>(val).FromJust();
+		rtl_dev->mock_return_error = Nan::To<int>(val).FromJust();
 	} else if(0 == field_str.compare("tuner_freq")) {
 		if(!val->IsNumber()) return Nan::ThrowTypeError("val must be a number for that field");
 		rtl_dev->tuner_freq = Nan::To<uint32_t>(val).FromJust();
@@ -144,4 +144,42 @@ void mock_set_device_count(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 
 	uint32_t u_count = Nan::To<uint32_t>(count).FromJust();
 	rtlsdr_mock_set_device_count(u_count);
+}
+
+void mock_is_device_handle(const Nan::FunctionCallbackInfo<v8::Value> & info) {
+	Local<Value> dev_hnd_val = info[0];
+	rtlsdr_dev_t * rtl_dev = NULL;
+
+	if(dev_hnd_val->IsObject()) {
+		Local<Object> dev_hnd = Nan::To<Object>(dev_hnd_val).ToLocalChecked();
+
+		if(dev_hnd->InternalFieldCount() == 1) {
+			rtl_dev = (rtlsdr_dev_t *) Nan::GetInternalFieldPointer(dev_hnd, 0);
+		}
+	}
+
+	info.GetReturnValue().Set((rtl_dev != NULL && rtl_dev->validity_magic == 0x123) ? Nan::True() : Nan::False());
+}
+
+void mock_get_written_eeprom(const Nan::FunctionCallbackInfo<v8::Value> & info) {
+	Local<Value> dev_hnd_val = info[0];
+	rtlsdr_dev_t * rtl_dev = NULL;
+
+	if(dev_hnd_val->IsObject()) {
+		Local<Object> dev_hnd = Nan::To<Object>(dev_hnd_val).ToLocalChecked();
+
+		if(dev_hnd->InternalFieldCount() == 1) {
+			rtl_dev = (rtlsdr_dev_t *) Nan::GetInternalFieldPointer(dev_hnd, 0);
+		}
+	}
+
+	if(rtl_dev == NULL)
+		return Nan::ThrowTypeError("the device handle must be a currently-open handle (from .open())");
+
+	if(rtl_dev->mock_eeprom == NULL)
+		info.GetReturnValue().Set(Nan::Null());
+	else
+		info.GetReturnValue().Set(
+			Nan::CopyBuffer((char *) rtl_dev->mock_eeprom, 256).ToLocalChecked()
+		);
 }

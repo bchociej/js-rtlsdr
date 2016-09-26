@@ -9,6 +9,8 @@
 void mock_get_rtlsdr_dev_contents(const Nan::FunctionCallbackInfo<v8::Value> & info);
 void mock_set_rtlsdr_dev_contents(const Nan::FunctionCallbackInfo<v8::Value> & info);
 void mock_set_device_count(const Nan::FunctionCallbackInfo<v8::Value> & info);
+void mock_is_device_handle(const Nan::FunctionCallbackInfo<v8::Value> & info);
+void mock_get_written_eeprom(const Nan::FunctionCallbackInfo<v8::Value> & info);
 #endif
 
 // https://github.com/steve-m/librtlsdr/blob/master/include/rtl-sdr.h
@@ -53,6 +55,8 @@ NAN_MODULE_INIT(InitAll) {
 	NAN_EXPORT(target, mock_get_rtlsdr_dev_contents);
 	NAN_EXPORT(target, mock_set_rtlsdr_dev_contents);
 	NAN_EXPORT(target, mock_set_device_count);
+	NAN_EXPORT(target, mock_is_device_handle);
+	NAN_EXPORT(target, mock_get_written_eeprom);
 	#endif
 
 	NAN_EXPORT(target, get_device_count);

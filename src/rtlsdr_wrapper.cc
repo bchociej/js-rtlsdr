@@ -195,7 +195,7 @@ void write_eeprom(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 		return Nan::ThrowTypeError("len must be a number");
 
 	int64_t i_len = Nan::To<int64_t>(len).FromJust();
-	if(i_len < 0 || i_len > 1<<16)
+	if(i_len < 0 || i_len >= 1<<16)
 	return Nan::ThrowRangeError("len should be an integer value from 0-65535");
 
 	uint8_t * ua_data = (uint8_t *) node::Buffer::Data(data);
@@ -252,7 +252,8 @@ void read_eeprom(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 			JS_RTLSDR_CHECK_ERR("rtlsdr_read_eeprom");
 	}
 
-	JS_RTLSDR_RETURN(Nan::NewBuffer((char *) data, (uint32_t) i_len).ToLocalChecked());
+	JS_RTLSDR_RETURN(Nan::CopyBuffer((char *) data, (uint32_t) i_len).ToLocalChecked());
+	free(data);
 }
 
 // set_center_freq(dev_hnd:DeviceHandle, center_freq:int)
@@ -279,7 +280,7 @@ void get_center_freq(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	uint32_t result = rtlsdr_get_center_freq(rtl_dev);
 
 	if(result == 0)
-		return Nan::ThrowError("an error occurred in rtlsdr_get_center_freq - maybe no center_freq set yet");
+		return Nan::ThrowError("an error occurred in rtlsdr_get_center_freq - maybe no center_freq set yet?");
 	else
 		JS_RTLSDR_RETURN(Nan::New(result));
 }
@@ -305,7 +306,7 @@ void get_freq_correction(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
 
-	uint32_t result = rtlsdr_get_freq_correction(rtl_dev);
+	int result = rtlsdr_get_freq_correction(rtl_dev);
 	JS_RTLSDR_RETURN(Nan::New(result));
 }
 
@@ -388,7 +389,11 @@ void set_tuner_bandwidth(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 		return Nan::ThrowTypeError("bw must be a number");
 
 	int i_bw = Nan::To<int>(bw).FromJust();
-	const int err = rtlsdr_set_tuner_gain(rtl_dev, i_bw);
+	if(i_bw < 0)
+		return Nan::ThrowRangeError("bw must be non-negative");
+
+	uint32_t u_bw = Nan::To<uint32_t>(bw).FromJust();
+	const int err = rtlsdr_set_tuner_bandwidth(rtl_dev, u_bw);
 	JS_RTLSDR_CHECK_ERR_NONZERO("rtlsdr_set_tuner_gain");
 }
 
@@ -556,7 +561,7 @@ void get_offset_tuning(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	rtlsdr_dev_t * rtl_dev = get_dev(dev_hnd);
 	JS_RTLSDR_CHECK_DEV(rtl_dev);
 
-	const int mode = rtlsdr_get_direct_sampling(rtl_dev), err = mode;
+	const int mode = rtlsdr_get_offset_tuning(rtl_dev), err = mode;
 	JS_RTLSDR_CHECK_ERR("rtlsdr_get_direct_sampling");
 	JS_RTLSDR_RETURN(mode == 1 ? Nan::True() : Nan::False());
 }
@@ -632,7 +637,7 @@ void read_async(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	work->rtl_dev = rtl_dev;
 	work->buf_num = Nan::To<uint32_t>(buf_num).FromMaybe(0);
 	work->buf_len = Nan::To<uint32_t>(buf_len).FromMaybe(0);
-	work->wait    = true;
+	work->wait    = false;
 
 	Nan::Callback * cb_listener = new Nan::Callback(listener.As<v8::Function>());
 	Nan::AsyncQueueWorker(new SampleReader(cb_listener, work));

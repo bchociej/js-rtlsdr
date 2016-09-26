@@ -8,7 +8,9 @@
   "main": "index.js",
   "scripts": {
     "install": "node-gyp configure build",
-    "test": "npm run test_js && npm run test_addon && npm run test_cpp",
+    "lint": "eslint src && eslint test",
+    "lint-fix": "eslint --fix src && eslint --fix test",
+    "test": "npm run lint && npm run test_js && npm run test_addon && npm run test_cpp",
     "test_addon": "npm run install && mocha test/addon",
     "test_js": "mocha test/js",
     "test_cpp": "JS_RTLSDR_BUILD_CPP_TESTS=yes npm run install && ./build/Release/rtlsdr_cpp_tests"
@@ -19,6 +21,14 @@
   },
   "devDependencies": {
     "@bchociej/catch": "^1.5.6-npm.4",
-    "mocha": "^3.0.2"
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
+    "eslint": "^3.6.0",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0"
   }
 }

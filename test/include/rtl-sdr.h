@@ -10,7 +10,6 @@
 typedef void(*rtlsdr_read_async_cb_t)(unsigned char *buf, uint32_t len, void *ctx);
 
 typedef struct rtlsdr_dev {
-	uint32_t index;
 	int freq_correction = 0;
 	int tuner_gain = 0;
 	int tuner_gain_mode = 0;
@@ -19,13 +18,16 @@ typedef struct rtlsdr_dev {
 	int direct_sampling = 0;
 	int offset_tuning = 0;
 	int mock_sync_read_discount = 0;
-	int mock_async_num_reads = 10;
+	int mock_return_error = 0;
+	uint8_t mock_eeprom[256];
+	uint32_t index;
 	uint32_t tuner_freq = 0;
 	uint32_t rtl_freq = 0;
 	uint32_t center_freq = 0;
 	uint32_t tuner_bandwidth = 0;
 	uint32_t sample_rate = 0;
 	std::map<int, int> if_gains;
+	const uint16_t validity_magic = 0x123;
 	bool buffer_ready = false;
 	bool open = false;
 	bool has_eeprom = false;
