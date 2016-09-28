@@ -1,8 +1,8 @@
 {
 	"variables": {
 		"js_rtlsdr_sources": [
-			"src/rtlsdr_wrapper.cc",
-			"src/sample_reader.cc"
+			"lib/addon/rtlsdr_wrapper.cc",
+			"lib/addon/sample_reader.cc"
 		],
 		"js_rtlsdr_addon_test_sources": [
 			"test/addon/mock_helper.cc",

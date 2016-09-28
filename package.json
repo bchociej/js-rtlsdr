@@ -8,8 +8,8 @@
   "main": "index.js",
   "scripts": {
     "install": "node-gyp configure build",
-    "lint": "eslint src && eslint test",
-    "lint-fix": "eslint --fix src && eslint --fix test",
+    "lint": "eslint lib && eslint test",
+    "lint-fix": "eslint --fix lib && eslint --fix test",
     "test": "npm run lint && npm run test_js && npm run test_addon && npm run test_cpp",
     "test_addon": "npm run install && mocha test/addon",
     "test_js": "mocha test/js",
