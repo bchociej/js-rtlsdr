@@ -1,4 +1,4 @@
-const should = require('../chai-setup');
+const should = require('chai').should();
 const rtlsdr = require('bindings')('rtlsdr_mocked.node');
 
 describe('rtlsdr_wrapper addon', () => {

@@ -1,5 +1,6 @@
+/build/
+/sandbox/
 node_modules/
 core
-/build/
 a.out
 npm-debug.log
