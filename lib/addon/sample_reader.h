@@ -2,6 +2,7 @@
 #define JS_RTLSDR_SAMPLE_READER_GRAB_H
 
 #include <rtl-sdr.h>
+#include <node.h>
 #include <nan.h>
 
 typedef struct sample_reader_work {

@@ -1,17 +1,35 @@
 {
   "name": "js-rtlsdr",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Ben Chociej <ben@chociej.io>",
   "description": "Node.js wrapper around librtlsdr",
   "license": "GPL-2.0+",
   "repository": "bchociej/js-rtlsdr",
   "main": "index.js",
   "scripts": {
-    "install": "node-gyp configure build"
+    "install": "node-gyp configure build",
+    "lint": "eslint lib && eslint test",
+    "lint-fix": "eslint --fix lib && eslint --fix test",
+    "test": "npm run lint && npm run test-js && npm run test-addon && npm run test-cpp",
+    "test-addon": "npm run install && mocha test/addon",
+    "test-js": "mocha test/js",
+    "test-cpp": "JS_RTLSDR_BUILD_CPP_TESTS=yes npm run install && ./build/Release/js-rtlsdr-addon-cpp-tests",
+    "doc": "npm run doc-js",
+    "doc-js": "rm -rf doc/* && jsdoc -d doc/ -c jsdoc.conf.json -t node_modules/jsdoc-baseline -r ./",
+    "prepublish": "npm run doc"
   },
-  "main": "index.js",
   "dependencies": {
     "bindings": "^1.2.1",
     "nan": "^2.4.0"
+  },
+  "devDependencies": {
+    "@bchociej/catch": "^1.5.6-npm.4",
+    "chai": "^3.5.0",
+    "eslint": "^3.6.0",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "jsdoc": "^3.4.1",
+    "jsdoc-baseline": "github:hegemonic/jsdoc-baseline",
+    "mocha": "^3.0.2"
   }
 }
