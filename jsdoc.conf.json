@@ -1,0 +1,9 @@
+{
+	"source": {
+		"excludePattern": "node_modules"
+	},
+	"plugins": ["plugins/markdown"],
+	"templates": {
+		"cleverLinks": true
+	}
+}

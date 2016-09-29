@@ -7,7 +7,9 @@ module.exports = {
 	},
 	"rules": {
 		"indent": ["error", "tab"],
+		"max-len": ["warn", 120],
 		"no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+		"no-plusplus": "off",
 		"no-tabs": "off"
 	}
 };
