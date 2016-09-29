@@ -1,5 +1,5 @@
 const should = require('chai').should();
-const rtlsdr = require('bindings')('rtlsdr_mocked.node');
+const rtlsdr = require('bindings')('js-rtlsdr-addon-mocked.node');
 
 describe('rtlsdr_wrapper addon', () => {
 	beforeEach(() => rtlsdr.mock_set_device_count(1));

@@ -447,7 +447,7 @@ void set_tuner_gain_mode(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 
 // set_sample_rate(dev_hnd:DeviceHandle, rate:int)
 // per librtlsdr docs, valid values are 225001-300000, 900001-3200000
-// and sample loss is to be expected > 2400000
+// and sample loss is to be expected at rate > 2400000
 void set_sample_rate(const Nan::FunctionCallbackInfo<v8::Value> & info) {
 	Local<Value> dev_hnd   = info[0],
 	             samp_rate = info[1];
