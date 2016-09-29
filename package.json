@@ -1,6 +1,6 @@
 {
   "name": "js-rtlsdr",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Ben Chociej <ben@chociej.io>",
   "description": "Node.js wrapper around librtlsdr",
   "license": "GPL-2.0+",
