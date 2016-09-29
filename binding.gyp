@@ -15,7 +15,7 @@
 	},
 	"targets": [
 		{
-			"target_name":       "rtlsdr",
+			"target_name":       "js-rtlsdr-addon",
 			"product_extension": "node",
 			"type":              "shared_library",
 			"libraries":         ["-lrtlsdr"],
@@ -23,7 +23,7 @@
 			"include_dirs":      ["<!(node -e \"require('nan')\")"]
 		},
 		{
-			"target_name":       "rtlsdr_mocked",
+			"target_name":       "js-rtlsdr-addon-mocked",
 			"product_extension": "node",
 			"type":              "shared_library",
 			"sources": [
@@ -40,7 +40,7 @@
 	"conditions": [
 		['"<!(echo $JS_RTLSDR_BUILD_CPP_TESTS)"=="yes"', {
 			"targets": [{
-				"target_name": "rtlsdr_cpp_tests",
+				"target_name": "js-rtlsdr-addon-cpp-tests",
 				"type":        "executable",
 				"cflags!":     ["-fno-exceptions"],
 				"cflags_cc!":  ["-fno-exceptions"],

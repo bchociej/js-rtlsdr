@@ -1,5 +1,6 @@
 /build/
 /sandbox/
+/doc/
 node_modules/
 core
 a.out

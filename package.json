@@ -10,15 +10,16 @@
     "install": "node-gyp configure build",
     "lint": "eslint lib && eslint test",
     "lint-fix": "eslint --fix lib && eslint --fix test",
-    "test": "npm run lint && npm run test_js && npm run test_addon && npm run test_cpp",
-    "test_addon": "npm run install && mocha test/addon",
-    "test_js": "mocha test/js",
-    "test_cpp": "JS_RTLSDR_BUILD_CPP_TESTS=yes npm run install && ./build/Release/rtlsdr_cpp_tests"
+    "test": "npm run lint && npm run test-js && npm run test-addon && npm run test-cpp",
+    "test-addon": "npm run install && mocha test/addon",
+    "test-js": "mocha test/js",
+    "test-cpp": "JS_RTLSDR_BUILD_CPP_TESTS=yes npm run install && ./build/Release/js-rtlsdr-addon-cpp-tests",
+    "doc": "npm run doc-js",
+    "doc-js": "rm -rf doc/* && jsdoc -d doc/ -c jsdoc.conf.json -t node_modules/jsdoc-baseline -r ./",
+    "prepublish": "npm run doc"
   },
   "dependencies": {
     "bindings": "^1.2.1",
-    "dsp.js": "corbanbrook/dsp.js",
-    "highland": "caolan/highland#3.0.0-beta.3",
     "nan": "^2.4.0"
   },
   "devDependencies": {
@@ -27,6 +28,8 @@
     "eslint": "^3.6.0",
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-import": "^1.16.0",
+    "jsdoc": "^3.4.1",
+    "jsdoc-baseline": "github:hegemonic/jsdoc-baseline",
     "mocha": "^3.0.2"
   }
 }
